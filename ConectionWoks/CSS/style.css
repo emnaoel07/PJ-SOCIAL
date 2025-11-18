@@ -62,6 +62,10 @@ body {
     bottom: -100px;
 
 }
+.cadastro-page{
+    overflow: hidden;
+    overflow-y: auto;
+}
 
 .background-shapes::after {
     width: 300px;
@@ -198,9 +202,11 @@ main {
     background-color: var(--color-card-background);
     border-radius: 15px;
     padding: 30px;
+    width: 450px;
     /* Remover sombra para replicar o estilo dos seus prints */
     border: 1px solid var(--color-border);
     margin-top: 50px;
+    margin-left: 140px;
 }
 
 /* --- Títulos e Textos --- */
