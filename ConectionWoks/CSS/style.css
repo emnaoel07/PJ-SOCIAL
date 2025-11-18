@@ -9,7 +9,8 @@
     --text-light: #00000099;
     --success-green: #057642;
     --dark-green: #315C40;
-    --gray:#929292;
+    --dark-green-hover: #2c863e;
+    --gray: #929292;
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -45,28 +46,30 @@ body {
 /*  ---- Circulos verdes ----- */
 .background-shapes::before,
 .background-shapes::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  border-radius: 50%;
-  z-index: -1;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    border-radius: 50%;
+    z-index: -1;
 }
 
 .background-shapes::before {
-  width: 450px;
-  height: 520px;
-  background-color: #81af88; /* verde claro */
-  left: -120px;
-  bottom: -100px;
-  
+    width: 450px;
+    height: 520px;
+    background-color: #81af88;
+    /* verde claro */
+    left: -120px;
+    bottom: -100px;
+
 }
 
 .background-shapes::after {
-  width: 300px;
-  height: 360px;
-  background-color: var(--dark-green); /* verde escuro */
-  left: 100px;
-  bottom: -60px;
+    width: 300px;
+    height: 360px;
+    background-color: var(--dark-green);
+    /* verde escuro */
+    left: 100px;
+    bottom: -60px;
 }
 
 header {
@@ -152,6 +155,21 @@ nav button.active {
     font-weight: 600;
     font-size: 14px;
 }
+.logout-btn {
+    background: var(--dark-green);
+    color: var(--white);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.logout-btn:hover {
+    background: var(--dark-green-hover);
+    transform: translateY(-2px);
+}
 
 main {
     max-width: 1200px;
@@ -177,44 +195,488 @@ main {
 }
 
 .Card-Cadastro {
-  background: var(--white);
-  border: 1px solid var(--gray);
-  border-radius: 20px;
-  padding: var(--spacing-md);
-  box-shadow: var(--shadow-sm);
-  height: 400px;
-  width: 400px;
-  transform: translateY(-40px);
-  margin-top: 25px;
-  margin-left: 100px;
-  text-align: center;
-}
-.Card-Cadastro p{
-    margin-bottom: var(--spacing-lg);
-    color: var(--dark-green);
-    font-size: 16px;
+    background-color: var(--color-card-background);
+    border-radius: 15px;
+    padding: 30px;
+    /* Remover sombra para replicar o estilo dos seus prints */
+    border: 1px solid var(--color-border);
+    margin-top: 50px;
 }
 
-.cadastro-section {
+/* --- Títulos e Textos --- */
+.card-title-lg {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-align: left;
+    /* Alinhado à esquerda na maioria dos passos */
+}
+
+.Card-Cadastro>p {
+    /* Título da tela de seleção */
+    font-size: 1.1em;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-text-dark);
+    margin-bottom: 25px;
+}
+
+.Card-Cadastro p:not(.card-title-lg) {
+    color: var(--color-text-medium);
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.section-cadastro {
+    position: relative;
+    width: 450px;
+
+    max-width: 450px;
+    padding: 20px;
+    /* Ajuste para centralizar o card */
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+
+form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
+}
+
+label {
+    font-size: 0.9em;
+    color: var(--color-text-dark);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    /* Mais sutil que 'bold' */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    padding: 12px 15px;
+    border: 2px solid var(--text-dark);
+    /* Borda fina */
+    border-radius: 8px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary);
+
+    outline: none;
+    box-shadow: 0 0 0 1px var(--color-primary);
+    /* Efeito sutil no foco */
+}
+
+/* Classe para esconder/mostrar telas */
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+}
+
+/* --- Link/Ícone de Voltar --- */
+.back-link {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    /* Ajuste para alinhar com o card */
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-size: 24px;
+    z-index: 10;
+}
+
+.arrow {
+    border: solid var(--color-text-dark);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 4px;
+    /* Aumenta o tamanho visual do ícone */
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+/* --- Link/Ícone de Voltar --- */
+.back-link {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-size: 24px;
+    z-index: 10;
+}
+
+.arrow {
+    border: solid var(--color-text-dark);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+/* --- Card Principal de Cadastro --- */
+.Card-Cadastro {
+    background-color: var(--color-card-background);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    border: 1px solid #ddd;
+}
+
+/* --- Títulos e Textos --- */
+.Card-Cadastro>p,
+.Card-Cadastro h2 {
+    text-align: left;
+    color: var(--color-text-dark);
+    margin-bottom: 25px;
+}
+
+.card-title-lg {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.Card-Cadastro>p:first-child {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.Card-Cadastro p:not(.card-title) {
+    color: var(--color-text-medium);
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* --- Formulário e Campos de Input --- */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.9em;
+    color: var(--color-text-dark);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    padding: 12px 15px;
+    border: 1px solid var(--dark-green);
+    border-radius: 8px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Estilo para os campos de data e selects genéricos */
+.date-group {
+    display: flex;
+    gap: 10px;
+}
+
+.date-group select {
+    flex: 1;
+    /* Ícone de dropdown sutil como no print */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="292.4" height="292.4" viewBox="0 0 292.4 292.4"><path fill="%23666666" d="M287 69.4L154.2 201.2c-5.8 5.8-13.7 8.7-22 8.7s-16.2-2.9-22-8.7L5.4 69.4c-5.8-5.8-5.8-15.3 0-21.1 5.8-5.8 15.3-5.8 21.1 0l115.7 115.7L265.9 48.3c5.8-5.8 15.3-5.8 21.1 0 5.8 5.8 5.8 15.3 0 21.1z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px auto;
+    padding-right: 30px;
+}
+
+.date-group select:focus {
+    background-image: none;
+    /* Remove a seta ao focar se preferir */
+}
+
+/* --- Progress Bar --- */
+.progress-bar-container {
+    display: flex;
+    justify-content: space-between;
+    height: 4px;
+    /* Mais fino como nos prints */
+    margin-bottom: 30px;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: var(--color-progress-bar);
+}
+
+.progress-bar-segment {
+    flex-grow: 1;
+    height: 100%;
+    background-color: var(--color-progress-bar);
+    margin-right: 4px;
+    transition: background-color 0.4s;
+    border-radius: 2px;
+}
+
+.progress-bar-segment:last-child {
+    margin-right: 0;
+}
+
+.progress-bar-segment.active {
+    background-color: var(--color-primary);
+}
+
+/* --- Botão Continuar --- */
+.btn-quartenary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s, opacity 0.3s;
+    box-shadow: 0 4px 6px rgba(56, 118, 29, 0.3);
+    /* Sombra no botão como no design */
+}
+
+.btn-quartenary:hover:not(:disabled) {
+    background-color: #2e6018;
+}
+
+/* Estado Desabilitado (Cinza Claro) */
+.btn-quartenary:disabled {
+    background-color: var(--color-button-disabled);
+    cursor: not-allowed;
+    opacity: 1;
+    /* Mantém a opacidade total */
+    box-shadow: none;
+}
+
+/* --- Radio Group (Tela de Seleção) --- */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.option-card {
+    /* O card em si */
+    background-color: var(--color-card-background);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+    position: relative; 
+}
+
+/* Ajusta o padding para que o conteúdo (imagem e texto) comece mais à esquerda */
+.option-card {
+    padding: 15px 15px; 
+}
+
+.option-card input[type="radio"] {
+    /* Esconde o radio button nativo */
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Estilo para o círculo de rádio customizado (acima do card, como no print) */
+.option-card .custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    position: absolute;
+    top: -30px; /* Posiciona acima do card */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-card-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.option-card input[type="radio"]:checked ~ .custom-radio {
+    border-color: var(--color-primary);
+}
+
+.option-card input[type="radio"]:checked ~ .custom-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    display: block;
+}
+
+/* Estilo do CARD quando selecionado */
+.option-card input[type="radio"]:checked + .custom-radio + .image-and-text {
+    border-color: var(--color-primary);
+    background-color: var(--color-highlight);
+}
+
+/* A estrutura do HTML na resposta anterior usa este seletor no JS para aplicar o estilo. */
+/* Garantindo que o card inteiro seja o alvo */
+.option-card.selected {
+    border-color: var(--color-primary) !important;
+    background-color: var(--color-highlight) !important;
+}
+
+
+/* Imagens e Texto */
+.option-card img {
+    width: 40px;
+    height: 40px; 
+    object-fit: cover; /* Manter quadrado */
+    margin-right: 15px;
+    border-radius: 0; /* IMAGEM QUADRADA CORRIGIDO */
+}
+
+.option-card .text-content {
+    flex-grow: 1;
+}
+
+.option-card .titulo {
+    font-weight: bold;
+    color: var(--color-text-dark);
+    font-size: 1.1em;
+    display: flex;
 
 }
-.cadastro-section h2 {
-    color: var(--dark-green);
-    font-size: 24px;
-    margin-bottom: var(--spacing-md);
-    text-align: center;
-    margin: auto;
-    margin-left: 188px;
+
+.option-card .subtitulo {
+    color: var(--color-text-medium);
+    font-size: 0.9em;
+    font-weight: normal;
+    display: flex;
+    position: relative ;
+    margin-top:5px;
+
+
+}
+
+.option-card.selected .titulo, 
+.option-card.selected .subtitulo {
+    color: var(--color-primary);
+}
+
+/* Esconder o radio button nativo no HTML ajustado */
+input[type="radio"] {
+    display: none;
+}
+/* Ajuste para seleção de radio */
+input[type="radio"]:checked+label {
+    border-color: var(--color-primary);
+    background-color: var(--color-highlight);
+}
+
+/* --- Campo Toggle (Remoto/Escritórios) --- */
+.toggle-option {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     margin-top: 20px;
-    
 }
-.option-container-2{
-    margin-top: 30px;
+
+.toggle-option label {
+    margin: 0;
+    font-weight: normal;
+    color: var(--color-text-dark);
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+    margin-right: 15px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 25px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--color-primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -251,7 +713,7 @@ main {
 }
 
 .btn {
-    background: var(--primary-blue);
+    background: var(--dark-green);
     color: var(--white);
     border: none;
     padding: var(--spacing-sm) var(--spacing-md);
@@ -265,7 +727,7 @@ main {
 }
 
 .btn:hover {
-    background: var(--primary-blue-hover);
+    background: var(--dark-green-hover);
 }
 
 .btn-terciary {
@@ -301,6 +763,7 @@ main {
     margin-top: 50px;
 
 }
+
 .btn-secondary {
     background: var(--white);
     color: var(--primary-blue);
@@ -561,48 +1024,42 @@ main {
 }
 
 .option {
-      display: flex;
-      align-items: center;
-      border: 1px solid #b8c9b8;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 15px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
+    display: flex;
+    align-items: center;
+    border: 1px solid #b8c9b8;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
 
-    .option:hover {
-      background-color: #f0f6f0;
-    }
+.option:hover {
+    background-color: #f0f6f0;
+}
 
-    input[type="radio"] {
-      accent-color: #2f5d38;
-      transform: scale(1.7);
-      margin-right: 12px;
-    }   
-    .titulo{
-        font-weight: 600;
-        margin-left: 10px;
-        font-size: 16px;
-        color: var(--dark-green);
-        margin-top: -20px;
+input[type="radio"] {
+    accent-color: #2f5d38;
+    transform: scale(1.7);
+    margin-right: 12px;
+}
 
-    }
-    .subtitulo{
-        font-size: 12px;
-        margin-left: -76px;
-        color: var(--gray);
-        margin-top: 20px;
-        font-weight: 400;
-    }
-    .subtitulo2{
-        font-size: 12px;
-        margin-left: -66px;
-        color: var(--gray);
-        margin-top: 20px;
-        font-weight: 400;
-    }
-    
+.titulo {
+    font-weight: 600;
+    margin-left: 10px;
+    font-size: 16px;
+    color: var(--dark-green);
+    margin-top: -20px;
+
+}
+
+.subtitulo {
+    font-size: 12px;
+    margin-left: 10px;
+    color: var(--gray);
+    margin-top: 20px;
+    font-weight: 400;
+}
 
 @media (max-width: 992px) {
     main {
