@@ -109,7 +109,13 @@
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                window.location.href = './cadastro.html';
+                window.location.href = '../../../Kaue/index.html';
+            });
+
+            document.querySelectorAll('.btn-terciary').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.location.href = '../../../Kaue/index.html';
+                });
             });
             }
 

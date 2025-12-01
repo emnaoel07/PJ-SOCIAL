@@ -1,8 +1,36 @@
+// -----------------------------
+// SALVAR E PEGAR DADOS (LOCALSTORAGE)
+// -----------------------------
+
+const saveFormData = (accountType, stepData) => {
+    const allData = JSON.parse(localStorage.getItem('cadastroData') || '{}');
+    allData[accountType] = { ...allData[accountType], ...stepData };
+    localStorage.setItem('cadastroData', JSON.stringify(allData));
+};
+
+const getFormData = (formId) => {
+    const form = document.getElementById(formId);
+    if (!form) return {};
+    
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    return data;
+};
+
+
+// -----------------------------
+//  CÓDIGO PRINCIPAL
+// -----------------------------
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Variáveis de controle de estado
+
+    // Variáveis globais
     let currentAccountType = null;
-    let currentStep = 0; // 0 é a tela de seleção
-    const maxSteps = 4; // Máximo de passos de cadastro
+    let currentStep = 0;
+    const maxSteps = 4;
 
     // Elementos do DOM
     const steps = {
@@ -16,38 +44,43 @@ document.addEventListener('DOMContentLoaded', () => {
         'empresa-3': document.getElementById('step-empresa-3'),
         'empresa-4': document.getElementById('step-empresa-4'),
     };
+
     const backButton = document.getElementById('backButton');
 
-    // --- 1. FUNÇÕES DE NAVEGAÇÃO ---
 
+
+    // -----------------------------
+    // VISIBILIDADE DOS PASSOS
+    // -----------------------------
     const updateVisibility = () => {
-        // Esconde todos os passos
-        Object.values(steps).forEach(step => {
-            if (step) step.classList.remove('active');
-        });
+        Object.values(steps).forEach(step => step?.classList.remove('active'));
 
-        let key = currentStep === 0 ? '0' : `${currentAccountType}-${currentStep}`;
-        
-        // Exibe o passo atual
-        if (steps[key]) {
-            steps[key].classList.add('active');
-        }
+        const key = currentStep === 0 ? '0' : `${currentAccountType}-${currentStep}`;
+        steps[key]?.classList.add('active');
 
-        // Controla a visibilidade do botão de voltar
-        if (currentStep > 0) {
-            backButton.style.display = 'block';
-        } else {
-            backButton.style.display = 'none';
-        }
+        backButton.style.display = currentStep > 0 ? 'block' : 'none';
     };
 
+
+    // -----------------------------
+    // NAVEGAÇÃO ENTRE PASSOS
+    // (AGORA INCLUINDO O SALVAR DADOS)
+    // -----------------------------
     const navigateToNextStep = () => {
+
+        // Salva dados do passo ANTES de avançar
+        if (currentStep > 0 && currentStep <= maxSteps) {
+            const formId = `form${currentAccountType.charAt(0).toUpperCase() + currentAccountType.slice(1)}Passo${currentStep}`;
+            const stepData = getFormData(formId);
+            saveFormData(currentAccountType, stepData);
+        }
+
         if (currentStep < maxSteps) {
             currentStep++;
             updateVisibility();
         } else if (currentStep === maxSteps) {
-            alert('Cadastro finalizado! Pronto para o próximo passo (página de sucesso).');
-            // Redirecionamento final
+            // Último passo -> redirecionar
+            window.location.href = 'itaworks.html';
         }
     };
 
@@ -55,84 +88,80 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentStep > 0) {
             currentStep--;
         } else {
-            // Se estiver no primeiro passo (1), volta para a seleção (0)
             currentStep = 0;
             currentAccountType = null;
         }
         updateVisibility();
     };
-    
+
     backButton.addEventListener('click', (e) => {
         e.preventDefault();
         navigateToPreviousStep();
     });
 
-    // --- 2. FUNÇÃO DE VALIDAÇÃO GERAL (ENABLE/DISABLE BUTTON) ---
 
+
+    // -----------------------------
+    // VALIDAÇÃO DE FORMULÁRIOS
+    // -----------------------------
     const setupFormValidation = (formId) => {
         const form = document.getElementById(formId);
         if (!form) return;
 
         const button = form.querySelector('button[type="submit"]');
-        // Seleciona todos os campos que possuem o atributo 'required'
         const requiredInputs = form.querySelectorAll('[required]');
 
         const checkFormValidity = () => {
             let allFilled = true;
             requiredInputs.forEach(input => {
-                // Checa se o campo está vazio. Para selects, checa se a opção de placeholder (value="") está selecionada.
-                if (input.value.trim() === '') {
-                    allFilled = false;
-                }
+                if (input.value.trim() === '') allFilled = false;
             });
-
-            // Habilita ou desabilita o botão
             button.disabled = !allFilled;
         };
 
-        // Adicionar listeners para checar a validade em tempo real
         requiredInputs.forEach(input => {
             input.addEventListener('input', checkFormValidity);
             input.addEventListener('change', checkFormValidity);
         });
 
-        // Submissão do formulário: avança para o próximo passo
         form.addEventListener('submit', (event) => {
-             event.preventDefault();
-             navigateToNextStep();
+            event.preventDefault();
+            navigateToNextStep();
         });
-        
-        // Checagem inicial
+
         checkFormValidity();
     };
 
-    // --- 3. CONFIGURAÇÃO DA TELA DE SELEÇÃO (PASSO 0) ---
 
+
+    // -----------------------------
+    // PASSO 0 – SELEÇÃO DE TIPO DE CONTA
+    // -----------------------------
     const selectionForm = document.getElementById('selectionForm');
     const radioInputs = selectionForm.querySelectorAll('input[name="accountType"]');
     const selectContinueButton = document.getElementById('selectContinueButton');
 
     const checkSelection = () => {
-        const isSelected = Array.from(radioInputs).some(input => input.checked);
+        const isSelected = [...radioInputs].some(i => i.checked);
         selectContinueButton.disabled = !isSelected;
     };
 
-    radioInputs.forEach(input => {
-        input.addEventListener('change', checkSelection);
-    });
+    radioInputs.forEach(input => input.addEventListener('change', checkSelection));
 
     selectionForm.addEventListener('submit', (event) => {
         event.preventDefault();
+
         const selectedType = selectionForm.querySelector('input[name="accountType"]:checked').value;
-        currentAccountType = selectedType; // Define o tipo de conta
-        currentStep = 1; // Vai para o primeiro passo do cadastro
+        currentAccountType = selectedType;
+        currentStep = 1;
         updateVisibility();
-        // console.log(`Tipo de conta selecionado: ${selectedType}`);
     });
 
 
-    // --- 4. PREENCHIMENTO DE SELECTS DE DATA/ANO (OPCIONAL) ---
 
+    // -----------------------------
+    // SELECTS DE DATA / ANO
+    // -----------------------------
     const populateYearSelect = (selectId, startYear) => {
         const select = document.getElementById(selectId);
         if (!select) return;
@@ -145,46 +174,48 @@ document.addEventListener('DOMContentLoaded', () => {
             select.appendChild(option);
         }
     };
-    
+
     const populateDateSelects = (diaId, mesId, anoId) => {
-        const diaSelect = document.getElementById(diaId);
-        const mesSelect = document.getElementById(mesId);
-        
-        // Popula Dias (1 a 31)
-        if (diaSelect) {
+        const dia = document.getElementById(diaId);
+        const mes = document.getElementById(mesId);
+
+        if (dia) {
             for (let i = 1; i <= 31; i++) {
-                const option = document.createElement('option');
-                option.value = i.toString().padStart(2, '0');
-                option.textContent = i.toString().padStart(2, '0');
-                diaSelect.appendChild(option);
+                const o = document.createElement('option');
+                o.value = o.textContent = i.toString().padStart(2, '0');
+                dia.appendChild(o);
             }
         }
 
-        // Popula Meses
-        if (mesSelect) {
-            const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            meses.forEach((nome, index) => {
-                const option = document.createElement('option');
-                option.value = (index + 1).toString().padStart(2, '0');
-                option.textContent = nome;
-                mesSelect.appendChild(option);
-            });
+        if (mes) {
+            ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
+                .forEach((nome, i) => {
+                    const o = document.createElement('option');
+                    o.value = (i + 1).toString().padStart(2, '0');
+                    o.textContent = nome;
+                    mes.appendChild(o);
+                });
         }
-        
-        // Popula Anos (chamando a função específica)
+
         populateYearSelect(anoId, 1950);
     };
 
-    // Aplica o preenchimento:
-    populateDateSelects('dia', 'mes', 'ano'); // Candidato
-    populateYearSelect('anoFundacao', 1900); // Empresa
+    populateDateSelects('dia', 'mes', 'ano');
+    populateYearSelect('anoFundacao', 1900);
 
-    // --- 5. APLICAÇÃO DA VALIDAÇÃO EM TODOS OS FORMULÁRIOS ---
 
+
+    // -----------------------------
+    // APLICAR VALIDAÇÃO EM TODOS OS FORMS
+    // -----------------------------
     const formIds = [
         'formCandidatoPasso1', 'formCandidatoPasso2', 'formCandidatoPasso3', 'formCandidatoPasso4',
         'formEmpresaPasso1', 'formEmpresaPasso2', 'formEmpresaPasso3', 'formEmpresaPasso4'
     ];
 
     formIds.forEach(id => setupFormValidation(id));
+
+
+    // Inicia na tela 0
+    updateVisibility();
 });
