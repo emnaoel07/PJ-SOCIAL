@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Empresas - ConnectWork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/Logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 14px 0;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 55px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d3b2f;
+        }
+
+        .menu {
+            display: flex;
+        }
+
+        .menu a {
+            margin: 0 18px;
+            color: #1d3b2f;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Página atual */
+        .menu a:nth-child(2) {
+            border-bottom: 2px solid #1d3b2f;
+            padding-bottom: 4px;
+        }
+
+        .icons i {
+            font-size: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            color: #1d3b2f;
+        }
+
+        /* ================= MENU MOBILE ================= */
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #1d3b2f;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: white;
+            width: 100%;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .mobile-menu a {
+            padding: 12px;
+            text-decoration: none;
+            color: #1d3b2f;
+            font-weight: 600;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        /* ================= CONTEÚDO ================= */
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1d3b2f;
+            margin-bottom: 30px;
+        }
+
+        /* Barra de pesquisa */
+
+        .search-area {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .search-area input {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .search-area button {
+            padding: 12px 22px;
+            background: #1d3b2f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-area button:hover {
+            background: #2d5946;
+        }
+
+        .search-hint {
+            text-align: left;
+            width: 60%;
+            margin: 0 auto 40px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* Categorias */
+
+        .subtitle {
+            text-align: left;
+            margin-bottom: 20px;
+            color: #1d3b2f;
+            font-weight: 700;
+            font-size: 18px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .category {
+            padding: 14px 28px;
+            border: 1px solid #bfc8c2;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: .2s;
+            color: #1d3b2f;
+        }
+
+        .category:hover {
+            background: #eaf3ed;
+            transform: translateY(-2px);
+        }
+
+        /* ================= RESPONSIVIDADE ================= */
+
+        @media (max-width: 900px) {
+
+            .menu, .icons {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .search-area input,
+            .search-hint,
+            .subtitle {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 23px;
+            }
+
+            .category {
+                padding: 12px 20px;
+            }
+        }
+        /* ================= EMPRESAS PAGE ================= */
+
+.main-content-emps {
+    max-width: 900px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.emp-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1d3b2f;
+    margin-bottom: 25px;
+}
+
+.emp-search-area {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.emp-search-area input {
+    width: 60%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.emp-search-area button {
+    padding: 12px 20px;
+    background: #1d3b2f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.emp-hint {
+    font-size: 13px;
+    opacity: .7;
+    text-align: left;
+    width: 60%;
+    margin: auto;
+}
+
+.emp-subtitle {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #1d3b2f;
+    font-weight: 700;
+}
+
+.emp-categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.emp-cat {
+    padding: 14px 28px;
+    border: 1px solid #cdd5cf;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.emp-cat:hover {
+    background: #e9f3ee;
+}
+
+/* LISTA DE RESULTADOS DE EMPRESAS */
+.emp-results {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.emp-card {
+    background: white;
+    border: 1px solid #cfd6d1;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.emp-card:hover {
+    border-color: #1d3b2f;
+    transform: translateY(-2px);
+}
+.emp-card {
+    background: white;
+    border: 1px solid #cfd6d1;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.emp-card:hover {
+    border-color: #1d3b2f;
+    transform: translateY(-2px);
+}
+
+.emp-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: #f3f3f3;
+    border: 1px solid #ddd;
+}
+
+.emp-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1d3b2f;
+}
+
+.emp-rating {
+    margin-top: 5px;
+    color: #ffaa00;
+    font-size: 14px;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-wrapper">
+                <img src="/Logo.png" class="logo-img">
+                <span class="logo-text">ConnectWork</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/PG_inicial.html">PÁGINA INICIAL</a>
+                <a href="#">EMPRESAS</a> <!-- Atual -->
+            </nav>
+
+            <div class="icons">
+                <i class="fas fa-comment"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/PG_inicial.html">PÁGINA INICIAL</a>
+            <a href="#">EMPRESAS</a>
+            <a href="#"><i class="fas fa-comment"></i> Mensagens</a>
+            <a href="#"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="#"><i class="fas fa-user"></i> Perfil</a>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="container">
+<section class="main-content-emps">
+
+    <h1 class="emp-title">Encontre excelentes lugares para trabalhar</h1>
+
+    <!-- BARRA DE PESQUISA -->
+    <div class="emp-search-area">
+        <input type="text" id="empSearchInput" placeholder="Buscar empresa..." />
+        <button id="empSearchBtn">Achar Empresa</button>
+    </div>
+
+    <p class="emp-hint">Buscar salários</p>
+
+    <!-- CATEGORIAS (SOME APÓS PESQUISA) -->
+    <h2 class="emp-subtitle" id="categoryTitle">Setores Populares</h2>
+
+    <div class="emp-categories" id="empCategories">
+        <div class="emp-cat">Saúde</div>
+        <div class="emp-cat">Tecnologia</div>
+        <div class="emp-cat">Marketing</div>
+        <div class="emp-cat">Logística</div>
+        <div class="emp-cat">Atendimento ao Cliente</div>
+        <div class="emp-cat">Engenharia</div>
+    </div>
+
+    <!-- RESULTADOS (MOSTRA APÓS PESQUISAR) -->
+    <div class="emp-results" id="empResults" style="display: none;"></div>
+
+</section>
+
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("open");
+        }
+       let empresas = [];
+
+// Carregar a base JSON real
+fetch("/empresas.json")
+    .then(r => r.json())
+    .then(data => empresas = data)
+    .catch(err => console.error("Erro ao carregar empresas:", err));
+
+const searchBtn = document.getElementById("empSearchBtn");
+const searchInput = document.getElementById("empSearchInput");
+const resultsBox = document.getElementById("empResults");
+const categoriesBox = document.getElementById("empCategories");
+const categoryTitle = document.getElementById("categoryTitle");
+
+// Função para gerar estrelas
+function gerarEstrelas(nota) {
+    const total = 5;
+    let estrelas = "";
+
+    for (let i = 1; i <= total; i++) {
+        estrelas += i <= nota ? "★" : "☆";
+    }
+
+    return estrelas;
+}
+
+function buscarEmpresas(termo) {
+    termo = termo.toLowerCase();
+
+    const filtradas = empresas.filter(emp =>
+        emp.nome.toLowerCase().includes(termo) ||
+        emp.setor.toLowerCase().includes(termo)
+    );
+
+    // Esconder categorias
+    categoriesBox.style.display = "none";
+    categoryTitle.style.display = "none";
+
+    // Mostrar resultados
+    resultsBox.style.display = "flex";
+    resultsBox.innerHTML = filtradas.length
+        ? filtradas.map(emp => `
+            <div class="emp-card">
+                <img src="${emp.logo}" class="emp-logo" alt="">
+                <div class="emp-info">
+                    <h3>${emp.nome}</h3>
+                    <p>Setor: ${emp.setor}</p>
+                    <div class="emp-rating">${gerarEstrelas(Math.round(emp.avaliacao))} (${emp.avaliacao})</div>
+                </div>
+            </div>
+        `).join("")
+        : "<p>Nenhuma empresa encontrada.</p>";
+}
+
+searchBtn.addEventListener("click", () => {
+    if (searchInput.value.trim()) buscarEmpresas(searchInput.value);
+});
+
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && searchInput.value.trim()) {
+        buscarEmpresas(searchInput.value);
+    }
+});
+
+// Pesquisa ao clicar em uma categoria
+document.querySelectorAll(".emp-cat").forEach(cat => {
+    cat.addEventListener("click", () => buscarEmpresas(cat.textContent));
+});
+
+    </script>
+
+</body>
+</html>

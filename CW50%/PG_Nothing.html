@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notificações - ConnectWork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/Logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 14px 0;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 55px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d3b2f;
+        }
+
+        .menu {
+            display: flex;
+        }
+
+        .menu a {
+            margin: 0 18px;
+            color: #1d3b2f;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Ícones do header */
+        .icons i {
+            font-size: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            color: #1d3b2f;
+        }
+
+        /* Ícone ativo */
+        .icons i.fa-bell {
+            border-bottom: 3px solid #1d3b2f;
+            padding-bottom: 3px;
+        }
+
+        /* ================= MENU MOBILE ================= */
+        .hamburger {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #1d3b2f;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: white;
+            width: 100%;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .mobile-menu a {
+            padding: 12px;
+            color: #1d3b2f;
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+        }
+
+        .mobile-divider {
+            width: 80%;
+            height: 1px;
+            background: #ddd;
+            margin: 12px auto;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        /* ================= CONTEÚDO CENTRAL ================= */
+        .center-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .center-content {
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .center-icon {
+            font-size: 90px;
+            color: #1d3b2f;
+            opacity: .8;
+            margin-bottom: 20px;
+        }
+
+        .center-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d3b2f;
+            margin-bottom: 10px;
+        }
+
+        .center-text {
+            font-size: 15px;
+            opacity: .7;
+            margin-bottom: 20px;
+        }
+
+        .center-btn {
+            background: #1d3b2f;
+            color: white;
+            padding: 12px 26px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .center-btn:hover {
+            background: #2d5946;
+        }
+
+        /* ================= RESPONSIVIDADE ================= */
+        @media (max-width: 900px) {
+            .menu, .icons {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .center-icon { font-size: 75px; }
+            .center-title { font-size: 20px; }
+        }
+        /* ============ MENU DO PERFIL ============ */
+
+.profile-menu {
+    position: absolute;
+    top: 90px;
+    right: 40px;
+    width: 230px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+    border: 1px solid #e3e3e3;
+    padding: 12px 0;
+    display: none;
+    z-index: 2000;
+}
+
+/* Cabeçalho da caixinha */
+.profile-top {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* FOTO DO PERFIL */
+.profile-photo {
+    width: 65px;
+    height: 65px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+}
+
+.profile-photo i {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: white;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 12px;
+    border: 1px solid #ccc;
+}
+
+.profile-name {
+    display: block;
+    margin-top: 6px;
+    font-weight: bold;
+    color: #1d3b2f;
+}
+
+/* Itens da lista */
+.profile-item {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #1d3b2f;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-item:hover {
+    background: #eef6f2;
+}
+
+.profile-divider {
+    width: 100%;
+    background: #e3e3e3;
+    height: 1px;
+    margin: 8px 0;
+}
+
+/* Sair */
+.logout {
+    color: #d9534f;
+    font-weight: 600;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-wrapper">
+                <img src="/Logo.png" class="logo-img">
+                <span class="logo-text">ConnectWork</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/PG_inicial.html">PÁGINA INICIAL</a>
+                <a href="/PG_empresas.html">EMPRESAS</a>
+            </nav>
+
+            <div class="icons">
+                <a href="/PG_msgs.html"><i class="fas fa-comment"></i></a>
+                <i class="fas fa-bell"></i> <!-- ativo -->
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+        </div>
+
+        <!-- MENU MOBILE -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/PG_inicial.html">PÁGINA INICIAL</a>
+            <a href="/PG_empresas.html">EMPRESAS</a>
+
+            <div class="mobile-divider"></div>
+
+            <a href="/PG_msgs.html"><i class="fas fa-comment"></i> Mensagens</a>
+            <a href="#"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="#"><i class="fas fa-user"></i> Meu Perfil</a>
+        </div>
+        <!-- MENU DO PERFIL (ESCONDIDO) -->
+<div class="profile-menu" id="profileMenu">
+    <div class="profile-top">
+        <div class="profile-photo">
+            <i class="fas fa-pen"></i>
+        </div>
+        <span class="profile-name">Lucas</span>
+    </div>
+
+    <div class="profile-item">
+        <i class="fas fa-book"></i>
+        Minhas Interações
+    </div>
+
+    <div class="profile-item">
+        <i class="fas fa-gear"></i>
+        Configurações
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <div class="profile-item logout">
+        Sair
+    </div>
+</div>
+
+    </header>
+
+    <!-- CONTEÚDO CENTRAL -->
+    <div class="center-box">
+        <div class="center-content">
+            <i class="fas fa-bell-slash center-icon"></i>
+
+            <h2 class="center-title">Não há notificações nesta página</h2>
+
+            <p class="center-text">
+                Aqui você será informado sobre o andamento das suas vagas e outras orientações que podem ajudar na sua jornada profissional.
+            </p>
+
+            <button class="center-btn" onclick="location.href='/PG_inicial.html'">
+                Procurar Vagas
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("open");
+        }
+
+        // Fecha menu mobile ao clicar em um item
+        document.querySelectorAll(".mobile-menu a").forEach(el => {
+            el.addEventListener("click", () => {
+                document.getElementById("mobileMenu").classList.remove("open");
+            });
+        });
+       
+    const userIcon = document.querySelector(".fa-user");
+    const profileMenu = document.getElementById("profileMenu");
+
+    // Abre/fecha ao clicar no ícone
+    userIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profileMenu.style.display =
+            profileMenu.style.display === "block" ? "none" : "block";
+    });
+
+    // Fecha ao clicar fora
+    document.addEventListener("click", (e) => {
+        if (!profileMenu.contains(e.target)) {
+            profileMenu.style.display = "none";
+        }
+    });
+
+
+    </script>
+
+</body>
+</html>

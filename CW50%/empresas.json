@@ -1,0 +1,44 @@
+[
+    {
+        "nome": "Nubank",
+        "setor": "Tecnologia",
+        "logo": "https://logopng.com.br/logos/nubank-95.png",
+        "avaliacao": 4.7
+    },
+    {
+        "nome": "Google Brasil",
+        "setor": "Tecnologia",
+        "logo": "https://logodownload.org/wp-content/uploads/2014/09/google-logo-1.png",
+        "avaliacao": 4.9
+    },
+    {
+        "nome": "Hospital São Lucas",
+        "setor": "Saúde",
+        "logo": "https://cdn-icons-png.flaticon.com/512/2966/2966327.png",
+        "avaliacao": 4.2
+    },
+    {
+        "nome": "Amil",
+        "setor": "Saúde",
+        "logo": "https://logodownload.org/wp-content/uploads/2016/11/amil-logo.png",
+        "avaliacao": 3.8
+    },
+    {
+        "nome": "Loggi",
+        "setor": "Logística",
+        "logo": "https://logodownload.org/wp-content/uploads/2018/03/loggi-logo-9.png",
+        "avaliacao": 4.4
+    },
+    {
+        "nome": "Magazine Luiza",
+        "setor": "Atendimento ao Cliente",
+        "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png",
+        "avaliacao": 4.0
+    },
+    {
+        "nome": "EletroMóveis",
+        "setor": "Atendimento ao Cliente",
+        "logo": "https://eletromoveis.vteximg.com.br/arquivos/BANNER412x40801.png?v=637516973543170000",
+        "avaliacao": 4.2
+    }
+]
